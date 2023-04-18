@@ -12,24 +12,31 @@ For YouTube videos, there appear to be 2 primary categories for licensing:
  
 Although every video has a license, it is very common for a scrape attempt to not retrieve anything. In our runs, we found that ~10-15% of videos had an unobtainable license file. We assume that these videos have the standard YouTube license to avoid issues.
 
-
-## Benefits of Creative Commons
+### Benefits of Creative Commons
 The main benefit of creative commons, especially for those who work hevily in open source or research is the ability to redistribute the data without legal implication. This means that the dataset provided here can be reuploaded/shared elsewhere, allowing for more reproducibility. 
 
-## Number of Samples
-This dataset contains a total of [insert number of samples] audio samples, each 10s long. All files were downloaded late 2021 and so the full set will likely contain more samples that if it was to be downloaded today (random loss of videos on YouTube from the ontology).
+## Dataset Details & Download
+This dataset contains a total of 10789 audio samples, each 10s long. All files were downloaded late 2021 and so the full set will likely contain more samples that if it was to be downloaded today (random loss of videos on YouTube from the ontology). No particular focuswas put on mainting balance between classes (as it would have required undersampling some files we obtained). There is supplied multilabel labels from the original ontology so this is still posisble as an extra setp is needed. 
+
+The full dataset along with labels can be downloaded on 
 
 ## File Description
 ### Original MetaData Files
-- big_data.csv : Contains majority of the details for the full AudioSet ontology
-- labels.csv : mID to human-readable label conversion
-- ontology.json : Heirarchy information
-- qa_true_counts.csv : Estimated quality of class labelling
-- suitable_classes.npy : A numpy array containing all human readable classes and their mIDs which we are intererested in downloading from. We include all classes in AudioSet in this file to cover all possible files. 
+ - big_data.csv : Contains majority of the details for the full AudioSet ontology
+ - labels.csv : mID to human-readable label conversion
+ - ontology.json : Heirarchy information
+ - qa_true_counts.csv : Estimated quality of class labelling
+ - suitable_classes.npy : A numpy array containing all human readable classes and their mIDs which we are intererested in downloading from. We include all classes in AudioSet in this file to cover all possible files. How this file and suitable class selection works can be found [here]()
 
 ### Python Scripts
-- invest_1.py : Iterates through the 'big_data' dataframe and grabs the license for every single sample
-- 
+ - invest_1.py : Iterates through the 'big_data' dataframe and grabs the license for every single sample (outputs csv files which are combined into all_cc_df.csv)
+ - cc_class_dist.py : Iterates through all found CC files and grabs all relevent yID/label pairings to maintain multi-label (outputs all_cc_qual_0_false.csv)
+ - download_cc.py : Downloads all CC files (outputs main data folder with files)
+
+### Generated Files
+ - all_cc_df.csv : A collected of YIDs of all CC licensed vides found from search
+ - all_cc_qual_0_false.csv : A collection of YID/MID(label) pairs. We do this so that we can later maintain the multi-label nature of the original dataset
+ - label_df.csv : Final multi-label labels for the CC licensed files
 
 ## Citation
 If you use this dataset in your research, please cite the paper it was created for use in:
